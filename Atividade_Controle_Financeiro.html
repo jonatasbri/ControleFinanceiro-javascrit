@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Controle Financeiro</title>
+
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Bootstrap Icons -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+
+    <style>
+        body {
+            background-color: #f5f7fa;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #0d6efd, #6610f2);
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .receitas {
+            background: linear-gradient(135deg, #198754, #20c997);
+            color: white;
+        }
+
+        .despesas {
+            background: linear-gradient(135deg, #dc3545, #fd7e14);
+            color: white;
+        }
+
+        .saldo {
+            background: linear-gradient(135deg, #0d6efd, #6610f2);
+            color: white;
+        }
+
+        .valor-receita {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .valor-despesa {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .btn {
+            border-radius: 10px;
+        }
+
+        .resumo-icone,
+        .mensagem-icone {
+            font-size: 2.5rem;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar navbar-dark">
+
+        <div class="container">
+
+            <span class="navbar-brand fw-bold">
+
+                <i class="bi bi-wallet2 me-2"></i>
+
+                Controle Financeiro
+
+            </span>
+
+        </div>
+
+    </nav>
+
+
+    <main class="container py-5">
+
+
+        <!-- TÍTULO -->
+
+        <div class="text-center mb-5">
+
+            <h1 class="fw-bold">
+                Controle Financeiro
+            </h1>
+
+            <p class="text-muted">
+                Cadastre suas receitas e despesas
+            </p>
+
+        </div>
+
+
+        <!-- cardS -->
+
+        <div class="row g-4 mb-4">
+
+
+            <!-- RECEITAS -->
+
+            <div class="col-md-4">
+
+                <div class="card receitas">
+
+                    <div class="card-body p-4">
+
+                        <div class="d-flex justify-content-between">
+
+                            <div>
+
+                                <p class="mb-1">
+                                    Receitas
+                                </p>
+
+                                <h3 id="totalReceitas" class="fw-bold">
+                                    R$ 0,00
+                                </h3>
+
+                            </div>
+
+                            <i class="bi bi-arrow-up-circle resumo-icone"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DESPESAS -->
+
+            <div class="col-md-4">
+
+                <div class="card despesas">
+
+                    <div class="card-body p-4">
+
+                        <div class="d-flex justify-content-between">
+
+                            <div>
+
+                                <p class="mb-1">
+                                    Despesas
+                                </p>
+
+                                <h3 id="totalDespesas" class="fw-bold">
+                                    R$ 0,00
+                                </h3>
+
+                            </div>
+
+                            <i class="bi bi-arrow-down-circle resumo-icone"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SALDO -->
+
+            <div class="col-md-4">
+
+                <div class="card saldo">
+
+                    <div class="card-body p-4">
+
+                        <div class="d-flex justify-content-between">
+
+                            <div>
+
+                                <p class="mb-1">
+                                    Saldo
+                                </p>
+
+                                <h3 id="saldo" class="fw-bold">
+                                    R$ 0,00
+                                </h3>
+
+                            </div>
+
+                            <i class="bi bi-wallet2 resumo-icone"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- FORMULÁRIO -->
+
+            <div class="col-md-4">
+
+                <div class="card">
+
+                    <div class="card-body p-4">
+
+                        <h5 class="fw-bold mb-4">
+
+                            <i class="bi bi-plus-circle me-2"></i>
+
+                            Novo lançamento
+
+                        </h5>
+
+
+                        <form id="formLancamento">
+
+
+                            <!-- DESCRIÇÃO -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Descrição
+                                </label>
+
+                                < type="text" id="descricao" class="form-control" placeholder="Ex: Salário"
+                                    required>
+
+                            </div>
+
+
+                            <!-- VALOR -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Valor
+                                </label>
+
+                                < type="number" id="valor" class="form-control" placeholder="Ex: 1500" step="0.01"
+                                    required>
+
+                            </div>
+
+
+                            <!-- TIPO -->
+
+                            <div class="mb-4">
+
+                                <label class="form-label">
+                                    Tipo
+                                </label>
+
+                                <select id="tipo" class="form-select" aria-label="Tipo do lançamento" required>
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="receita">
+                                        Receita
+                                    </option>
+
+                                    <option value="despesa">
+                                        Despesa
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- BOTÃO -->
+
+                            <button type="submit" class="btn btn-primary w-100">
+
+                                <i class="bi bi-plus-lg me-2"></i>
+
+                                Adicionar
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TABELA -->
+
+            <div class="col-md-8">
+
+                <div class="card">
+
+                    <div class="card-body p-4">
+
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+
+                            <h5 class="fw-bold mb-0">
+                                Lançamentos
+                            </h5>
+
+                            <span id="contador" class="badge bg-primary">
+                                0
+                            </span>
+
+                        </div>
+
+
+                        <div class="table-responsive">
+
+                            <table class="table table-hover">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Descrição
+                                        </th>
+
+                                        <th>
+                                            Tipo
+                                        </th>
+
+                                        <th>
+                                            Valor
+                                        </th>
+
+                                        <th>
+                                            Ação
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+
+                                <tbody id="listaLancamentos">
+                                    <!--
+
+                                    O JavaScript vai inserir
+                                    as linhas aqui usando innerHTML
+
+                                -->
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+                        <!-- MENSAGEM VAZIA -->
+
+                        <div id="mensagemVazia" class="text-center text-muted py-4">
+
+                            <i class="bi bi-inbox mensagem-icone"></i>
+
+                            <p class="mt-2 mb-0">
+                                Nenhum lançamento cadastrado.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LIMPAR -->
+
+        <div class="text-center mt-4">
+
+            <button id="btnLimpar" class="btn btn-outline-danger" type="button">
+
+                <i class="bi bi-trash me-2"></i>
+
+                Limpar lançamentos
+
+            </button>
+
+        </div>
+
+
+    </main>
+
+
+
+        <script>
+            // 1. Primeiro, selecionei os elementos que vou usar no JavaScript.
+            const Lancamento = document.getElementById('Lancamento');
+            const Descricao = document.getElementById('descricao');
+            const Valor = document.getElementById('valor');
+            const Tipo = document.getElementById('tipo');
+            const Receitas = document.getElementById('totalReceitas');
+            const Despesas = document.getElementById('totalDespesas');
+            const Saldo = document.getElementById('saldo');
+            const tabelaLancamentos = document.getElementById('listaLancamentos');
+            const contadorLancamentos = document.getElementById('contador');
+            const mensagemVazia = document.getElementById('mensagemVazia');
+            const btnLimpar = document.getElementById('btnLimpar');
+
+            // Teste desta etapa: confirmei no navegador que os elementos foram encontrados.
+
+            // 2. Depois, criei o array para guardar os lançamentos cadastrados.
+            let lancamentos = [];
+
+            // Teste desta etapa: iniciei a aplicação com a lista vazia e os valores zerados.
+
+            // 3. Criei uma função para formatar os valores como moeda brasileira."https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString"
+            function formatarMoeda(valor) {
+                return valor.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                });
+            }
+
+            // Teste desta etapa: verifiquei que um valor aparece no formato R$ 0,00.
+
+            // 4. Criei a função que calcula e atualiza os cards e o contador.
+            function atualizarTotais() {
+                const totalReceitas = lancamentos
+                    .filter(lancamento => lancamento.tipo === 'receita')
+                    .reduce((total, lancamento) => total + lancamento.valor, 0);
+                const totalDespesas = lancamentos
+                    .filter(lancamento => lancamento.tipo === 'despesa')
+                    .reduce((total, lancamento) => total + lancamento.valor, 0);
+                const saldo = totalReceitas - totalDespesas;
+
+                cardReceitas.textContent = formatarMoeda(totalReceitas);
+                cardDespesas.textContent = formatarMoeda(totalDespesas);
+                cardSaldo.textContent = formatarMoeda(saldo);
+                contadorLancamentos.textContent = lancamentos.length;
+                mensagemVazia.style.display = lancamentos.length === 0 ? 'block' : 'none';
+            }
+
+            // Teste desta etapa: testei os cards vazios e confirmei que todos mostram R$ 0,00.
+
+            // 5. Criei a função para mostrar os lançamentos dentro da tabela.
+            function renderizarTabela() {
+                tabelaLancamentos.innerHTML = '';
+
+                lancamentos.forEach((lancamento, index) => {
+                    const ehReceita = lancamento.tipo === 'receita';
+                    const tr = document.createElement('tr');
+
+                    tr.innerHTML = `
+                        <td>${lancamento.descricao}</td>
+                        <td><span class="badge ${ehReceita ? 'bg-success' : 'bg-danger'}">
+                            ${ehReceita ? 'Receita' : 'Despesa'}</span></td>
+                        <td class="${ehReceita ? 'valor-receita' : 'valor-despesa'}">
+                            ${ehReceita ? '+' : '-'} ${formatarMoeda(lancamento.valor)}</td>
+                        <td><button class="btn btn-sm btn-outline-danger" type="button"
+                            onclick="excluirLancamento(${index})"
+                            title="Excluir lançamento" aria-label="Excluir lançamento">
+                            <i class="bi bi-trash"></i></button></td>`;
+
+                    tabelaLancamentos.appendChild(tr);
+                });
+
+                atualizarTotais();
+            }
+
+            // Teste desta etapa: adicionei dados de teste e confirmei que eles apareceram na tabela.
+
+            // 6. Criei a função para cadastrar um novo lançamento.
+            function adicionarLancamento(event) {
+                event.preventDefault();
+
+                const descricao = Descricao.value.trim();
+                const valor = Number(Valor.value);
+                const tipo = selectTipo.value;
+
+                if (!descricao || !Number.isFinite(valor) || valor <= 0 || !tipo) {
+                    alert('Por favor, preencha todos os campos corretamente!');
+                    return;
+                }
+
+                lancamentos.push({ descricao, valor, tipo });
+                formLancamento.reset();
+                renderizarTabela();
+            }
+
+            // Teste desta etapa: cadastrei uma receita e uma despesa e conferi os valores calculados.
+
+            // 7. Criei a função para excluir somente o lançamento escolhido.
+            function excluirLancamento(index) {
+                lancamentos.splice(index, 1);
+                renderizarTabela();
+            }
+
+            // Teste desta etapa: excluí um lançamento e confirmei a atualização dos cards e do contador.
+
+            // 8. Criei a função para limpar todos os lançamentos.
+            function limparTodosLancamentos() {
+                if (lancamentos.length === 0) {
+                    return;
+                }
+
+                if (confirm('Tem certeza de que deseja apagar todos os lançamentos?')) {
+                    lancamentos = [];
+                    renderizarTabela();
+                }
+            }
+
+            // 9. Por último, liguei os eventos aos botões e renderizei o estado inicial.
+            formLancamento.addEventListener('submit', adicionarLancamento);
+            btnLimpar.addEventListener('click', limparTodosLancamentos);
+            renderizarTabela();
+
+            // Teste final: limpei a lista e confirmei que os indicadores voltaram para zero.
+        </script>
+
+</body>
+
+</html>
